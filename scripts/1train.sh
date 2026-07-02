@@ -1,6 +1,16 @@
 set -euo pipefail
 
-"Train DeepDistinguisher model for a single code length value."
+#!/usr/bin/env bash
+# train_goppa.sh
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+#
+# ------------------------------------------------------------------
+# Train the code-distance model on a chosen Goppa dataset.
+# ------------------------------------------------------------------
 
 GPU_ID=${GPU_ID:-0,1}           
 TASK="code-dist-goppa"

@@ -9,7 +9,7 @@ This repository focuses on the analysis of DeepDistinguisher for binary Goppa co
 The main additions are:
 
 * a C implementation for faster generation of Goppa and random matrices;
-* a modified representation using the systematic block (A) instead of the full generator matrix (G=[I_k \mid A]);
+* a modified representation using the systematic block (A) instead of the full generator matrix $$(G=[I_k \mid A])$$;
 * attention-map and saliency-map analysis tools;
 * an explicit XOR-based distinguisher;
 * comparisons between DeepDistinguisher and the XOR-distinguisher;
@@ -108,9 +108,43 @@ The project requires :
 * h5py;
 * a C compiler such as `gcc`;
 * optionally, an NVIDIA GPU for training.
+* PyTorch, installed separately according to the user's hardware;
 
 SageMath is required by the original AI4Code generation pipeline.
 The C generation pipeline requires a standard C compiler and `make`.
+
+## PyTorch Installation
+
+PyTorch is not pinned to a specific CUDA version in `requirements.txt`, because the correct PyTorch build depends on the user's hardware, operating system, NVIDIA driver and CUDA version.
+
+By default, a CPU-only installation can be used:
+
+```bash
+pip install torch
+```
+
+This is sufficient to run the code on CPU, although training DeepDistinguisher will be significantly slower than on GPU.
+
+For GPU support, install PyTorch separately by following the official installation instructions:
+
+```text
+https://pytorch.org/get-started/locally/
+```
+
+For example, on a machine using CUDA 13.0, the installation command may look like:
+
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cu130
+```
+
+After installing PyTorch, check the installation with:
+
+```bash
+python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
+```
+
+The output should display the installed PyTorch version. If `torch.cuda.is_available()` returns `True`, PyTorch can access a CUDA-compatible GPU.
+
 
 ---
 
@@ -146,7 +180,7 @@ Check that SageMath is available:
 
 ```bash
 sage -python - <<'PY'
-import sageall
+import sage.all
 print("SageMath available")
 PY
 ```
@@ -294,8 +328,10 @@ scripts/
 For example:
 
 ```bash
-bash scripts/1train.sh
+bash scripts/1train.sh n t representation
 ```
+`n` is the code length, `t` is the degree of the Goppa polynomial, and `representation` is the matrix representation used to train the model.
+
 
 The model checkpoints are written to:
 
@@ -439,7 +475,7 @@ This supports the analysis of the XOR-distinguisher and helps compare empirical 
 
 ## Example Workflow
 
-An example of experiment consists of the following steps.
+An example of training DeepDistinguisher consists of the following steps.
 
 ### 1. Compile the C generators
 
@@ -454,16 +490,41 @@ python generationC/make_dataset_goppa_parallel.py 64 6 2 10000
 python generationC/make_dataset_random_parallel.py 64 6 2 10000
 ```
 
+### 3. Train DeepDistinguisher
+
+```bash
+bash scripts/1train.sh 64 2 AT
+```
+
+An other example of the complete workflow (longer to compute) is :
+
+---
+
+### 1. Compile the C generators
+
+```bash
+make -C ./generationC/
+```
+
+### 2. Generate Goppa and random datasets
+
+```bash
+for n in $(seq 32 8 64); do
+    python3 generationC/make_dataset_goppa_parallel.py "$n" 6 4 100000 && \
+    python3 generationC/make_dataset_random_parallel.py "$n" 6 4 100000
+done
+```
+
 ### 3. Generate XOR-free random datasets
 
 ```bash
-python generationC/make_dataset_xorfree.py 64 6 2 10000
+python generationC/make_dataset_xorfree.py 64 6 4 10000
 ```
 
 ### 4. Train DeepDistinguisher
 
 ```bash
-bash scripts/1train.sh
+bash scripts/ntrain.sh 64 4 AT
 ```
 
 

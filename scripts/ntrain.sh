@@ -3,16 +3,16 @@ set -euo pipefail
 #This script train the model for all code length you write in param_sets
 
 # ── tweak-once-use-everywhere parameters ──────────────────────────
-GPU_ID=${GPU_ID:-0}            # override with:  GPU_ID=1 ./train_goppa.sh …
+GPU_ID=${GPU_ID:-0}          
 TASK="code-dist-all-goppa"
 
 CODE_LEN=64
 M_ALT=6
-T_ALT=2
+T_ALT=4
 Q=2
 
-TRAIN_SAMPLES=9500000
-EVAL_SAMPLES=500000
+TRAIN_SAMPLES=950000
+EVAL_SAMPLES=50000
 TRAIN_BATCH_SIZE=512
 VAL_BATCH_SIZE=2000
 VAL_EVERY=1000
@@ -22,7 +22,6 @@ CODE_LEN="${1:?Usage: $0 <CODE_LEN>}"
 T_ALT="${2:?Usage: $0 <T_ALT>}"
 REPR="${3:?Usage:$0<REPR>}"
 
-#NUM_TRAIN_EPOCH=$(($T_ALT))
 NUM_TRAIN_EPOCH=10
 # ── training call ─────────────────────────────────────────────────
 echo "Starting training on GPU ${GPU_ID}"
@@ -41,7 +40,7 @@ python train.py \
     --val_every        "$VAL_EVERY" \
     --log_every        "$LOG_EVERY" \
     --code_len         "$CODE_LEN" \
-    --data_path        "./data/dataset_goppa_<codelen>_H5/${REPR}_goppa_nmt_<codelen>_<malt>_<talt>/dataset_1M.h5" \
+    --data_path        "./data/dataset_goppa_<codelen>_H5/${REPR}_goppa_nmt_<codelen>_<malt>_<talt>/dataset_100K.h5" \
     --m_alt            "$M_ALT" \
     --t_alt            "$T_ALT" \
     --tqdm             True \
@@ -50,5 +49,5 @@ python train.py \
     --representation             "$REPR"
     
 
-echo "✅  Training finished."
+echo "Training finished."
 
