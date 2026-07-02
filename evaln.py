@@ -428,7 +428,7 @@ def main():
 
     n = 64
     m = 6
-    t = 4
+    t = 2
 
     representation = "AT"
 
@@ -436,7 +436,7 @@ def main():
     #   "standard" : AT_model_Goppa_N64_T3_M6/checkpoint.pth
     #   "all"      : AT_model_NGoppa_N64_T3_M6/checkpoint.pth
     #   "goppaall" : AT_model_GoppaAll_Nmax64_T3_M6/checkpoint.pth
-    checkpoint_kind = "all"
+    checkpoint_kind = "standard"
 
     checkpoint_root = "./checkpoint/debug_pretrain"
 
