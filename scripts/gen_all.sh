@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-"This script allow you to generate all data necessary to train DeepDistinguisher on matrix representation A for t values 2-8"
+#"This script allow you to generate all data necessary to train DeepDistinguisher on matrix representation A for t values 2-8"
 
 NUM_WORKERS=10
 DUMP_PATH="./data"

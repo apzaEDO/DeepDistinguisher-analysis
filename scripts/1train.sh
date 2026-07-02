@@ -41,7 +41,7 @@ mkdir -p "$DUMP_PATH"
 
 CUDA_VISIBLE_DEVICES=$GPU_ID \
 
-python train.py \
+python -m train.py \
     --task "$TASK" \
     --dump_path "$DUMP_PATH" \
     --exp_id "${REPR}_model_Goppa_N${CODE_LEN}_T${T_ALT}_M${M_ALT}" \

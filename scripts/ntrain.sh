@@ -28,7 +28,7 @@ echo "Starting training on GPU ${GPU_ID}"
 DUMP_PATH="${DUMP_PATH:-$PWD/checkpoint}"
 mkdir -p "$DUMP_PATH"
 CUDA_VISIBLE_DEVICES=$GPU_ID \
-python train.py \
+python -m train.py \
     --task "$TASK" \
     --dump_path "$DUMP_PATH" \
     --param_sets "32,${M_ALT},${T_ALT};40,${M_ALT},${T_ALT};48,${M_ALT},${T_ALT};56,${M_ALT},${T_ALT};64,${M_ALT},${T_ALT}"\
