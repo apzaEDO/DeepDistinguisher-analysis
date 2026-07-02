@@ -113,41 +113,6 @@ The project requires :
 SageMath is required by the original AI4Code generation pipeline.
 The C generation pipeline requires a standard C compiler and `make`.
 
-## PyTorch Installation
-
-PyTorch is not pinned to a specific CUDA version in `requirements.txt`, because the correct PyTorch build depends on the user's hardware, operating system, NVIDIA driver and CUDA version.
-
-By default, a CPU-only installation can be used:
-
-```bash
-pip install torch
-```
-
-This is sufficient to run the code on CPU, although training DeepDistinguisher will be significantly slower than on GPU.
-
-For GPU support, install PyTorch separately by following the official installation instructions:
-
-```text
-https://pytorch.org/get-started/locally/
-```
-
-For example, on a machine using CUDA 13.0, the installation command may look like:
-
-```bash
-pip install torch --index-url https://download.pytorch.org/whl/cu130
-```
-
-After installing PyTorch, check the installation with:
-
-```bash
-python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
-```
-
-The output should display the installed PyTorch version. If `torch.cuda.is_available()` returns `True`, PyTorch can access a CUDA-compatible GPU.
-
-
----
-
 ## Installation
 
 Create a Python environment:
@@ -158,6 +123,10 @@ conda activate ai4code-analysis
 ```
 
 Install Python dependencies:
+
+```bash
+conda install -c conda-forge numpy scipy scikit-learn h5py
+```
 
 ```bash
 pip install -r requirements.txt
@@ -198,6 +167,41 @@ generationC/gen_goppa
 generationC/gen_random
 generationC/gen_xorfree
 ```
+
+---
+
+## PyTorch Installation
+
+PyTorch is not pinned to a specific CUDA version in `requirements.txt`, because the correct PyTorch build depends on the user's hardware, operating system, NVIDIA driver and CUDA version.
+
+By default, a CPU-only installation can be used:
+
+```bash
+pip install torch
+```
+
+This is sufficient to run the code on CPU, although training DeepDistinguisher will be significantly slower than on GPU.
+
+For GPU support, install PyTorch separately by following the official installation instructions:
+
+```text
+https://pytorch.org/get-started/locally/
+```
+
+For example, on a machine using CUDA 13.0, the installation command may look like:
+
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cu130
+```
+
+After installing PyTorch, check the installation with:
+
+```bash
+python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
+```
+
+The output should display the installed PyTorch version. If `torch.cuda.is_available()` returns `True`, PyTorch can access a CUDA-compatible GPU.
+
 
 ---
 
