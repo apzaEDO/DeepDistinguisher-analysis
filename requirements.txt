@@ -1,0 +1,10 @@
+einops==0.8.1
+h5py==3.11.0
+joblib==1.4.2
+numpy==1.26.4
+omegaconf==2.3.0
+python-dotenv==1.1.1
+scikit_learn==1.7.0
+scipy==1.15.3
+tqdm==4.67.1
+wandb==0.21.0
